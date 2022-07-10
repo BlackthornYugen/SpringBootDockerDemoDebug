@@ -1,22 +1,25 @@
 package com.example.demo;
 
-import entity.Entitybus;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.CustomerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import rep.EntitybusRepository;
+import rep.CustomerRepository;
 
-@SpringBootApplication(scanBasePackages =  { "entity", "rest"})
+@SpringBootApplication(scanBasePackages =  { "entity", "rest" })
 @EnableJpaRepositories("rep")
 @EntityScan("entity")
 public class DemoApplication implements CommandLineRunner
 {
+    @Autowired
+    CustomerRepository customerRepository;
 
     @Autowired
-    EntitybusRepository entitybusRepository;
+    ObjectMapper objectMapper;
 
     public static void main(String[] args)
     {
@@ -27,11 +30,16 @@ public class DemoApplication implements CommandLineRunner
     public void run(String... args) throws Exception
     {
         // Getting all
-        System.out.println("***** All *******");
-        for(Entitybus st : entitybusRepository.findAll())
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("***** All *******");
+        stringBuilder.append(System.lineSeparator());
+        for(CustomerEntity customerEntity : customerRepository.findAll())
         {
-            System.out.println(st);
+            stringBuilder.append(objectMapper.writeValueAsString(customerEntity));
+            stringBuilder.append(System.lineSeparator());
         }
+
+        System.out.println(stringBuilder);
 
     }
 }
