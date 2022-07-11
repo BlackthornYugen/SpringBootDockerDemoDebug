@@ -1,6 +1,7 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
@@ -8,16 +9,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Data
 @EqualsAndHashCode
 public class CustomerEntity {
     private Long id;
 
     @JsonManagedReference
+    @EqualsAndHashCode.Exclude
     private Set<PhoneEntity> phones = new HashSet<>();
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Id
     @GeneratedValue
@@ -30,9 +29,5 @@ public class CustomerEntity {
     @JoinTable
     public Set<PhoneEntity> getPhones() {
         return phones;
-    }
-
-    public void setPhones(Set<PhoneEntity> phones) {
-        this.phones = phones;
     }
 }
