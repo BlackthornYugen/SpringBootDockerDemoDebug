@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,6 +14,10 @@ import java.util.Set;
 @EqualsAndHashCode
 public class PhoneEntity {
     private Long id;
+
+    @Column(unique = true, updatable = false)
+    @Pattern(regexp = "^(?:\\+?\\d{1}\\s?)?\\(?(\\d{3})\\)?-?\\s?(\\d{3})-?\\s?(\\d{4})$")
+    String phoneNumber;
 
     @JsonBackReference
     @EqualsAndHashCode.Exclude
