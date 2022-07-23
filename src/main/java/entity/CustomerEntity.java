@@ -22,7 +22,8 @@ public class CustomerEntity {
     private Set<PhoneEntity> phones = new HashSet<>();
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "CUSTOMER_SEQ_GEN", sequenceName = "CUSTOMER_SEQ", initialValue = 100_000_000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUSTOMER_SEQ_GEN")
     @Column(name = "CID", nullable = false)
     public Long getId() {
         return id;

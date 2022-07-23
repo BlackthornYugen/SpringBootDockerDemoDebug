@@ -18,7 +18,8 @@ public class PhoneEntity {
     String phoneNumber;
 
     @Id
-    @GeneratedValue
+    @SequenceGenerator(name = "PHONE_SEQ_GEN", sequenceName = "PHONE_SEQ", initialValue = 300_000_000)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PHONE_SEQ_GEN")
     @Column(name = "PID", nullable = false)
     public Long getId() {
         return id;
