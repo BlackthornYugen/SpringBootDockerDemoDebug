@@ -2,7 +2,6 @@ package com.example.demo;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.CustomerEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,19 +9,24 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import rep.CustomerRepository;
 
+import javax.validation.constraints.NotNull;
+
 @SpringBootApplication(scanBasePackages =  { "entity", "rest" })
 @EnableJpaRepositories("rep")
 @EntityScan("entity")
 public class DemoApplication implements CommandLineRunner
 {
-    @Autowired
-    CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-    @Autowired
-    ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
 
-    public static void main(String[] args)
-    {
+    public DemoApplication(@NotNull CustomerRepository customerRepository,
+                           @NotNull ObjectMapper objectMapper) {
+        this.customerRepository = customerRepository;
+        this.objectMapper = objectMapper;
+    }
+
+    public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
 

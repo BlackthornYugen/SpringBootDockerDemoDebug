@@ -4,7 +4,6 @@ import entity.CustomerEntity;
 import entity.PhoneEntity;
 import lombok.val;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,14 +12,20 @@ import org.springframework.web.bind.annotation.RestController;
 import rep.CustomerRepository;
 import rep.PhoneRepository;
 
+import javax.validation.constraints.NotNull;
+
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    @Autowired
-    private PhoneRepository phoneRepository;
+    private final PhoneRepository phoneRepository;
 
-    @Autowired
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
+
+    public CustomerController(@NotNull PhoneRepository phoneRepository,
+                              @NotNull CustomerRepository customerRepository) {
+        this.phoneRepository = phoneRepository;
+        this.customerRepository = customerRepository;
+    }
 
     @GetMapping
     public Iterable<CustomerEntity> findAll() {
