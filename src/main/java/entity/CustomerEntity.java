@@ -28,8 +28,14 @@ public class CustomerEntity {
         return id;
     }
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @JoinTable(name = "customer_phone")
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "customer_phone",
+            foreignKey = @ForeignKey(name = "FK_phone_customer_customer"),
+            inverseForeignKey = @ForeignKey(name = "FK_phone_customer_phone"),
+            joinColumns = {@JoinColumn(name = "customer_id", referencedColumnName = "cid")},
+            inverseJoinColumns = {@JoinColumn(name = "phones_id", referencedColumnName = "pid")}
+    )
     public Set<PhoneEntity> getPhones() {
         return phones;
     }
