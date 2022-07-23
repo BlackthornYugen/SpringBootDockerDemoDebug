@@ -13,6 +13,7 @@ import java.util.Set;
 @Entity
 @Data
 @EqualsAndHashCode
+@Table(name = "phone")
 public class PhoneEntity {
     private Long id;
 

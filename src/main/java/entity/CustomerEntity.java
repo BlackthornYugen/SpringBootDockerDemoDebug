@@ -11,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "customer")
 @EqualsAndHashCode
 public class CustomerEntity {
     private Long id;
@@ -28,7 +29,7 @@ public class CustomerEntity {
     }
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-    @JoinTable
+    @JoinTable(name = "customer_phone")
     public Set<PhoneEntity> getPhones() {
         return phones;
     }
