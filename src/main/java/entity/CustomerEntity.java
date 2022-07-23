@@ -3,6 +3,7 @@ package entity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ public class CustomerEntity {
 
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<PhoneEntity> phones = new HashSet<>();
 
     @Id
