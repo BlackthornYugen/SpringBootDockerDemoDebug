@@ -2,9 +2,9 @@
 FROM maven:3-openjdk-18-slim as target
 WORKDIR /build
 COPY pom.xml .
-RUN mvn dependency:go-offline
+RUN --mount=type=cache,target=/root/.m2 mvn dependency:go-offline
 COPY src /build/src
-RUN mvn package
+RUN --mount=type=cache,target=/root/.m2 mvn --offline package
 
 # Step : Package image
 FROM openjdk:18-slim
